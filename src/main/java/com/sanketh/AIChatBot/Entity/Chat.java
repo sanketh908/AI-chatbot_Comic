@@ -1,5 +1,7 @@
 package com.sanketh.AIChatBot.Entity;
 
+
+import com.sanketh.AIChatBot.DTO.Response;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +9,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static org.springframework.data.projection.EntityProjection.ProjectionType.DTO;
 
 @Data
 @Entity
