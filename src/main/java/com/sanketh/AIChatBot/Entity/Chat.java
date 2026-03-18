@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -16,9 +17,9 @@ public class Chat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
     @Column(unique = true)
-    private String userMessage;
-    @Column(unique = true, length = 5000)
-    private String botResponse;
+    private String userRequest;
+    @OneToMany(cascade = CascadeType.ALL)
+    List<Response> responses;
     @Column(name = "timestamp")
     LocalDateTime timestamp ;
 }
