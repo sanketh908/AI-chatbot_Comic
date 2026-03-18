@@ -5,11 +5,19 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
+<<<<<<< HEAD
 		<version>3.5.12-SNAPSHOT</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.sanketh</groupId>
 	<artifactId>AIChatBot</artifactId>
+=======
+		<version>3.5.11</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.sanketh</groupId>
+	<artifactId>chatbot-backend</artifactId>
+>>>>>>> c5f44fdfd25927f83f4947d0064ab3e721d710e8
 	<version>0.0.1-SNAPSHOT</version>
 	<name/>
 	<description/>
@@ -32,6 +40,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+<<<<<<< HEAD
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
@@ -40,6 +49,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+=======
+>>>>>>> c5f44fdfd25927f83f4947d0064ab3e721d710e8
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
@@ -59,11 +70,14 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+<<<<<<< HEAD
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+=======
+>>>>>>> c5f44fdfd25927f83f4947d0064ab3e721d710e8
 	</dependencies>
 
 	<build>
@@ -94,6 +108,7 @@
 			</plugin>
 		</plugins>
 	</build>
+<<<<<<< HEAD
 	<repositories>
 		<repository>
 			<id>spring-snapshots</id>
@@ -114,5 +129,7 @@
 			</releases>
 		</pluginRepository>
 	</pluginRepositories>
+=======
+>>>>>>> c5f44fdfd25927f83f4947d0064ab3e721d710e8
 
 </project>
