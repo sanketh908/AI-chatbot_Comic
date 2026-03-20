@@ -17,7 +17,7 @@ public class ChatbotController {
         this.chatService = chatService;
     }
 
-    @GetMapping("/chat")
+    @GetMapping("/response")
     public ResponseEntity<Response> chat(@RequestParam String prompt) {
         String responce= chatService.getResponse(prompt);
         if (responce.equals("No response from the model.")) {
