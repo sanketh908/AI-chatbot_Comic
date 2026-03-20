@@ -19,11 +19,11 @@ public class ChatbotController {
 
     @GetMapping("/response")
     public ResponseEntity<Response> chat(@RequestParam String prompt) {
-        String responce= chatService.getResponse(prompt);
-        if (responce == null) {
-            return new ResponseEntity<>(new Response(responce), HttpStatus.INTERNAL_SERVER_ERROR);
+        String response = chatService.getResponse(prompt);
+        if (response == null) {
+            return new ResponseEntity<>(new Response(response), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(new Response(responce), HttpStatus.OK);
+        return new ResponseEntity<>(new Response(response), HttpStatus.OK);
     }
 
     @GetMapping("/ping")
