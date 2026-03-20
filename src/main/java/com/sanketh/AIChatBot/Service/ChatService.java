@@ -1,19 +1,14 @@
 package com.sanketh.AIChatBot.Service;
-import org.springframework.ai.chat.model.ChatModel;
-import org.springframework.ai.chat.prompt.Prompt;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClient;
 
 @Service
 public class ChatService {
-
-    private final ChatModel chatModel;
-
-    public ChatService(ChatModel chatModel) {
-        this.chatModel = chatModel;
-    }
-
-    public String getResponse(String userMessage) {
-         return chatModel.call(userMessage);
-
+    private final RestClient restClient;
+    private final String model;
+    public ChatService(@Value("${ollama.base-url}") String baseUrl, @Value("${ollama.model}") String model) {
+        this.restClient = RestClient.builder().baseUrl(baseUrl).build();
+        this.model = model;
     }
 }

@@ -1,12 +1,12 @@
 package com.sanketh.AIChatBot.Controller;
 
 import com.sanketh.AIChatBot.Service.ChatService;
-import com.sanketh.AIChatBot.DTO.ChatRequest;
-import com.sanketh.AIChatBot.DTO.ChatResponse;
+import com.sanketh.AIChatBot.DTO.Request;
+import com.sanketh.AIChatBot.DTO.Response;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/chat")
 @CrossOrigin(origins = "*")
 public class ChatbotController {
 
