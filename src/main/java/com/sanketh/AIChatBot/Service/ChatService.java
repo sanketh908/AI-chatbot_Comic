@@ -16,7 +16,7 @@ public class ChatService {
     public String getResponse(String prompt)
     {
         Request request= new Request(model, prompt, false);
-        Response response=restClient.post().uri("/api/chat")
+        Response response=restClient.post().uri("/api/generate")
                 .body(request)
                 .retrieve()
                 .body(Response.class);
