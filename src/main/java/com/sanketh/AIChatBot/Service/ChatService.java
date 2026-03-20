@@ -22,6 +22,7 @@ public class ChatService {
                 .body(Response.class);
         if (response != null) {
             return response.response();
+
         } else {
             return null;
         }
