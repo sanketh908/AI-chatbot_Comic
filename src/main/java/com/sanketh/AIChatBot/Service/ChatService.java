@@ -23,7 +23,7 @@ public class ChatService {
         if (response != null) {
             return response.response();
         } else {
-            return "No response from the model.";
+            return null;
         }
     }
 }
