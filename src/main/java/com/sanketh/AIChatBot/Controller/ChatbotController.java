@@ -20,7 +20,7 @@ public class ChatbotController {
     @GetMapping("/response")
     public ResponseEntity<Response> chat(@RequestParam String prompt) {
         String responce= chatService.getResponse(prompt);
-        if (responce.equals("No response from the model.")) {
+        if (responce.equals("No response from the model.") || responce == null) {
             return new ResponseEntity<>(new Response(responce), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(new Response(responce), HttpStatus.OK);
