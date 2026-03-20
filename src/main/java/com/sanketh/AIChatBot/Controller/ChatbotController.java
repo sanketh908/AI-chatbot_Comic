@@ -6,7 +6,7 @@ import com.sanketh.AIChatBot.DTO.ChatResponse;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/chat")
+@RequestMapping("/api")
 @CrossOrigin(origins = "*")
 public class ChatbotController {
 
@@ -16,10 +16,10 @@ public class ChatbotController {
         this.chatService = chatService;
     }
 
-    @PostMapping
-    public ChatResponse chat(@RequestBody ChatRequest request) {
-        String answer = chatService.getResponse(request.getMessage());
-        return new ChatResponse(answer);
+    @GetMapping("/chat")
+    public String chat(@RequestParam String prompt) {
+        String answer = chatService.getResponse(prompt);
+        return answer;
     }
 
     @GetMapping("/ping")

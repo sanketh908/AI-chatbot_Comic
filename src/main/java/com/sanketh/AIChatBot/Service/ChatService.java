@@ -13,7 +13,7 @@ public class ChatService {
     }
 
     public String getResponse(String userMessage) {
-        var response = chatModel.call(new Prompt(userMessage));
-        return response.getResult().getOutput().toString();
+         return chatModel.call(userMessage);
+
     }
 }
