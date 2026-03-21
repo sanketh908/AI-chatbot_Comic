@@ -1,7 +1,9 @@
 package com.sanketh.AIChatBot.Controller;
 
 import com.sanketh.AIChatBot.Entity.User;
+import com.sanketh.AIChatBot.Enums.Roles;
 import com.sanketh.AIChatBot.Service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +29,13 @@ public class HomeController {
     }
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody  User user) {
-    User user= userService.getUser(user);
+        user.setRole(Roles.USER);
+        User newuser=userService.getUser(user);
+        if(newuser !=null){
+            return new ResponseEntity<>(newuser, HttpStatus.OK);
+        }else
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
     }
 
 }
