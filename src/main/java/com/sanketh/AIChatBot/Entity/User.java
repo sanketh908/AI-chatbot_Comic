@@ -15,5 +15,5 @@ public class User {
     private String email;
     private String role;
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
-    private List<Prompt> prompts;
+    private List<Chat> prompts;
 }
