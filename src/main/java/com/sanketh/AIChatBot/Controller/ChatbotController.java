@@ -1,7 +1,7 @@
 package com.sanketh.AIChatBot.Controller;
 
 import com.sanketh.AIChatBot.DTO.Response;
-import com.sanketh.AIChatBot.Service.AiService;
+import com.sanketh.AIChatBot.Service.ChatService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*")
 public class ChatbotController {
 
-    private final AiService chatService;
+    private final ChatService chatService;
 
-    public ChatbotController(AiService chatService) {
+    public ChatbotController(ChatService chatService) {
         this.chatService = chatService;
     }
 

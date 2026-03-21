@@ -6,11 +6,11 @@ import lombok.Data;
 import java.time.LocalDateTime;
 @Data
 @Entity
-@Table(name = "Chats")
-public class Chat {
+@Table(name = "Prompts")
+public class Prompt {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "c_id", nullable = false,unique = true)
+    @Column(name = "p_id", nullable = false,unique = true)
    private int id;
     @Column(name = "prompt")
    private String prompt;

@@ -1,12 +1,20 @@
 package com.sanketh.AIChatBot.Controller;
 
 import com.sanketh.AIChatBot.Entity.User;
+import com.sanketh.AIChatBot.Service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "*")
+@RequestMapping("/home")
 public class HomeController {
+    private final UserService userService;
+
+    public HomeController(UserService userService) {
+        this.userService = userService;
+    }
+
     @GetMapping("/")
     public String home() {
         return "Welcome to the AI Chatbot !";
@@ -19,7 +27,7 @@ public class HomeController {
     }
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody  User user) {
-
+    User user= userService.getUser(user);
     }
 
 }
