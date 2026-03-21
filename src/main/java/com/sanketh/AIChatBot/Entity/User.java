@@ -1,5 +1,5 @@
 package com.sanketh.AIChatBot.Entity;
-
+import java.util.List;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -14,5 +14,6 @@ public class User {
     private String password;
     private String email;
     private String role;
-    private String List<>;
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<Prompt> prompts;
 }
