@@ -16,7 +16,7 @@ public class User {
     private String password;
     private String email;
     @Enumerated(EnumType.STRING)
-    private Roles role;
+    private List<Roles> role;
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Prompt> prompts;
 }

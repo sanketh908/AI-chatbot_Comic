@@ -5,15 +5,20 @@ import com.sanketh.AIChatBot.Enums.Roles;
 import com.sanketh.AIChatBot.Service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collections;
 
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/home")
 public class HomeController {
+    private final PasswordEncoder passwordEncoder;
     private final UserService userService;
 
-    public HomeController(UserService userService) {
+    public HomeController(PasswordEncoder passwordEncoder, UserService userService) {
+        this.passwordEncoder = passwordEncoder;
         this.userService = userService;
     }
 
@@ -29,7 +34,8 @@ public class HomeController {
     }
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody  User user) {
-        user.setRole(Roles.USER);
+        user.setRole(Collections.singletonList(Roles.USER));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         User newuser=userService.getUser(user);
         if(newuser !=null){
             return new ResponseEntity<>(newuser, HttpStatus.OK);
