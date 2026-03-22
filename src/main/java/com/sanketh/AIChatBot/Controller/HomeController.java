@@ -34,7 +34,7 @@ public class HomeController {
     }
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody  User user) {
-        user.setRole(Collections.singletonList(Roles.USER));
+        user.setRole(Roles.ROLE_USER);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         User newuser=userService.getUser(user);
         if(newuser !=null){

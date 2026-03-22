@@ -21,7 +21,7 @@ public class User {
     private String email;
     @Enumerated(EnumType.STRING)
     @Column(name = "roles", nullable = false)
-    private List<Roles> role;
+    private Roles role;
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Prompt> prompts;
 }
