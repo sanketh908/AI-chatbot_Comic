@@ -1,4 +1,5 @@
 package com.sanketh.AIChatBot.Entity;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.sanketh.AIChatBot.Enums.Roles;
@@ -23,5 +24,5 @@ public class User {
     @Column(name = "roles", nullable = false)
     private Roles role;
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
-    private List<Prompt> prompts;
+    private List<Prompt> prompts =new ArrayList<>();
 }

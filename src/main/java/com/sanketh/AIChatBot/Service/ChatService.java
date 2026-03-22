@@ -21,8 +21,10 @@ public class ChatService {
     Authentication authentication = SecurityContextHolder
             .getContext()
             .getAuthentication();
-    UserPrinciple userPrinciple= (UserPrinciple) authentication.getPrincipal();
-    User currentUser= (User) authentication.getPrincipal();
+
+
+    UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
+    User currentUser = userPrinciple.getUser();
 
     private final UserService userService;
 
@@ -43,6 +45,12 @@ public class ChatService {
                 .body(request)
                 .retrieve()
                 .body(Response.class);
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new IllegalStateException("No authenticated user");
+        }
+
+        UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
+        User currentUser = userPrinciple.getUser();
         Prompt promptEntity = new Prompt();
         if (response != null) {
 
