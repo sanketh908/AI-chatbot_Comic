@@ -31,7 +31,12 @@ private final UserRepository userRepository;
     }
 
     public User deleteUserById(Integer id){
-        return userRepository.deleteById(id);
+        User user = userRepository.findById(id).orElse(null);
+        if(user!=null){
+            userRepository.deleteById(id);
+            return user;
+        }
+        return null;
     }
 
 }
