@@ -3,6 +3,8 @@ import com.sanketh.AIChatBot.DTO.Request;
 import com.sanketh.AIChatBot.DTO.Response;
 import com.sanketh.AIChatBot.Entity.Prompt;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
@@ -11,6 +13,7 @@ import java.time.LocalDateTime;
 
 @Service
 public class ChatService {
+
     private final UserService userService;
 
     private final PromptService promptService;
@@ -36,7 +39,7 @@ public class ChatService {
             promptEntity.setResponse(response.response());
             promptEntity.setCreatedAt(LocalDateTime.now());
             promptService.getPrompt(promptEntity);
-            UserService
+
 
             return response.response();
 
