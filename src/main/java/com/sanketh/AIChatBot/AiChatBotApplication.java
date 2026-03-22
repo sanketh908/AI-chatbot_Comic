@@ -3,6 +3,8 @@ package com.sanketh.AIChatBot;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -14,7 +16,9 @@ public class  AiChatBotApplication {
 		SpringApplication.run(AiChatBotApplication.class, args);
 	}
 	@Bean
-	public PlatformTransactionManager transactionManager( ) {
+	public PlatformTransactionManager transactionManager(LocalContainerEntityManagerFactoryBean entityManagerFactory ) {
+        assert entityManagerFactory.getObject() != null;
+        return new JpaTransactionManager(entityManagerFactory.getObject());
 
 	}
 }

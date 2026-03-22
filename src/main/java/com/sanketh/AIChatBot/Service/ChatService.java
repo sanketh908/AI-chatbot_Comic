@@ -2,17 +2,27 @@ package com.sanketh.AIChatBot.Service;
 import com.sanketh.AIChatBot.DTO.Request;
 import com.sanketh.AIChatBot.DTO.Response;
 import com.sanketh.AIChatBot.Entity.Prompt;
+import com.sanketh.AIChatBot.Entity.User;
+import com.sanketh.AIChatBot.Security.UserPrinciple;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class ChatService {
+    Authentication authentication = SecurityContextHolder
+            .getContext()
+            .getAuthentication();
+    UserPrinciple userPrinciple= (UserPrinciple) authentication.getPrincipal();
+    User currentUser= (User) authentication.getPrincipal();
 
     private final UserService userService;
 
@@ -25,6 +35,7 @@ public class ChatService {
         this.restClient = RestClient.builder().baseUrl(baseUrl).build();
         this.model = model;
     }
+    @Transactional
     public String getResponse(String prompt)
     {
         Request request= new Request(model, prompt, false);
@@ -39,8 +50,8 @@ public class ChatService {
             promptEntity.setResponse(response.response());
             promptEntity.setCreatedAt(LocalDateTime.now());
             promptService.getPrompt(promptEntity);
-
-
+            currentUser.getPrompts().add(promptEntity);
+            userService.getUser(currentUser);
             return response.response();
 
         } else {
