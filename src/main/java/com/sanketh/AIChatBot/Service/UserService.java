@@ -4,6 +4,8 @@ import com.sanketh.AIChatBot.Entity.User;
 import com.sanketh.AIChatBot.Repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 private final UserRepository userRepository;
@@ -21,7 +23,15 @@ private final UserRepository userRepository;
         return userRepository.findByEmail(email);
     }
     public User getUserById(int id){
-        return userRepository.findById(id).
+        return userRepository.findById(id).orElse(null);
+    }
+
+    public List<User> getAllUser() {
+        return userRepository.findAll();
+    }
+
+    public User deleteUserById(Integer id){
+        return userRepository.deleteById(id);
     }
 
 }

@@ -4,10 +4,7 @@ import com.sanketh.AIChatBot.Entity.User;
 import com.sanketh.AIChatBot.Service.UserService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,6 +19,11 @@ public class AdminController {
     }
     @GetMapping("/getAllUsers")
     public ResponseEntity<?> getAllUser(){
-        List<User> userList= userService.getAl
+        List<User> userList= userService.getAllUser();
+        return ResponseEntity.ok().body(userList);
+    }
+    @DeleteMapping("/deleteUser/{id}")
+    public ResponseEntity<?> deleteUserById(@PathVariable Integer id){
+        User
     }
 }

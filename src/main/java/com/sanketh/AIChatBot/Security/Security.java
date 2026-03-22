@@ -1,12 +1,12 @@
 package com.sanketh.AIChatBot.Security;
 
-import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -17,9 +17,12 @@ public class Security extends WebSecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth->auth.requestMatchers("/chat/**").permitAll()
-                .requestMatchers("/**").permitAll()
-                .anyRequest().authenticated();
+                .authorizeHttpRequests(auth->auth.requestMatchers("/chat/**").hasRole("ROLE_USER")
+                .requestMatchers("/admin").hasRole("ROLE_ADMIN").requestMatchers("/home/**").permitAll()
+                .anyRequest().authenticated())
+                .formLogin(form->form.loginPage("/home/").permitAll())
+                .logout(LogoutConfigurer::permitAll);
+                return http.build();
     }
     @Bean
     public PasswordEncoder passwordEncoder() {
