@@ -1,8 +1,10 @@
 package com.sanketh.AIChatBot.Controller;
 
 import com.sanketh.AIChatBot.Entity.User;
+import com.sanketh.AIChatBot.Enums.Roles;
 import com.sanketh.AIChatBot.Service.UserService;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,5 +32,16 @@ public class AdminController {
         }else
             return ResponseEntity.badRequest().body("User with id "+id+" not found");
     }
+    @PostMapping
+    public ResponseEntity<?> addAdmin(@RequestBody User user){
+        user.setRole(Roles.ROLE_ADMIN);
+        User adminuser= userService.getUser(user);
+        if(adminuser!=null){
+           return new ResponseEntity<>(adminuser, HttpStatus.OK);
+        }
+        else
+            return new ResponseEntity<>("User with id "+user.getId()+" not saved", HttpStatus.BAD_REQUEST);
+    }
+
 
 }

@@ -14,11 +14,11 @@ import java.util.Collections;
 @CrossOrigin(origins = "*")
 @RequestMapping("/home")
 public class HomeController {
-    private final PasswordEncoder passwordEncoder;
+
     private final UserService userService;
 
-    public HomeController(PasswordEncoder passwordEncoder, UserService userService) {
-        this.passwordEncoder = passwordEncoder;
+    public HomeController( UserService userService) {
+
         this.userService = userService;
     }
 
@@ -35,7 +35,6 @@ public class HomeController {
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody  User user) {
         user.setRole(Roles.ROLE_USER);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         User newuser=userService.getUser(user);
         if(newuser !=null){
             return new ResponseEntity<>(newuser, HttpStatus.OK);

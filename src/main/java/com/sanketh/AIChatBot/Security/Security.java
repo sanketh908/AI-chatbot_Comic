@@ -25,8 +25,8 @@ public class Security  {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth->auth.requestMatchers("/chat/**").hasRole("ROLE_USER")
-                .requestMatchers("/admin/**").hasRole("ROLE_ADMIN").requestMatchers("/home/**").permitAll().requestMatchers("/login").permitAll()
+                .authorizeHttpRequests(auth->auth.requestMatchers("/chat/**").hasRole("USER")
+                .requestMatchers("/admin/**").hasRole("ADMIN").requestMatchers("/home/**").permitAll().requestMatchers("/login").permitAll()
                 .anyRequest().authenticated()
                 )
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)

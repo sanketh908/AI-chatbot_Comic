@@ -11,7 +11,7 @@ import java.util.Collection;
 
 import java.util.List;
 @Getter
-@Service
+
 public class UserPrinciple implements UserDetails {
     private final User user;
     public UserPrinciple(User user) {
