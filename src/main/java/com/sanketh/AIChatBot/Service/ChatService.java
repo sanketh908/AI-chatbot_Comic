@@ -18,13 +18,6 @@ import java.util.List;
 
 @Service
 public class ChatService {
-    Authentication authentication = SecurityContextHolder
-            .getContext()
-            .getAuthentication();
-
-
-    UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
-    User currentUser = userPrinciple.getUser();
 
     private final UserService userService;
 
@@ -39,7 +32,17 @@ public class ChatService {
     }
     @Transactional
     public String getResponse(String prompt)
-    {
+    {  Authentication authentication = SecurityContextHolder
+            .getContext()
+            .getAuthentication();
+
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new IllegalStateException("No authenticated user");
+        }
+
+        UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
+        User currentUser = userPrinciple.getUser();
+
         Request request= new Request(model, prompt, false);
         Response response=restClient.post().uri("/api/generate")
                 .body(request)
@@ -49,8 +52,6 @@ public class ChatService {
             throw new IllegalStateException("No authenticated user");
         }
 
-        UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
-        User currentUser = userPrinciple.getUser();
         Prompt promptEntity = new Prompt();
         if (response != null) {
 
