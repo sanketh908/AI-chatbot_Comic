@@ -25,12 +25,12 @@ public class Security  {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth->auth.requestMatchers("/chat/**").hasRole("USER")
+                .authorizeHttpRequests(auth->auth.requestMatchers("/chat/**").hasAnyRole("USER","ADMIN")
                 .requestMatchers("/admin/**").hasRole("ADMIN").requestMatchers("/home/**").permitAll().requestMatchers("/login").permitAll()
                 .anyRequest().authenticated()
                 )
-                .formLogin(form->form.loginPage("/login").disable())
-                .logout(LogoutConfigurer::permitAll);
+                .formLogin(AbstractHttpConfigurer::disable)
+                .logout(AbstractHttpConfigurer::disable);
 
 
                 return http.build();
