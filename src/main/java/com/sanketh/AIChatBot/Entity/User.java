@@ -23,6 +23,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(name = "roles", nullable = false)
     private Roles role;
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Prompt> prompts =new ArrayList<>();
 }

@@ -32,7 +32,7 @@ public class AdminController {
         }else
             return ResponseEntity.badRequest().body("User with id "+id+" not found");
     }
-    @PostMapping
+    @PostMapping("/addAdmin")
     public ResponseEntity<?> addAdmin(@RequestBody User user){
         user.setRole(Roles.ROLE_ADMIN);
         User adminuser= userService.getUser(user);

@@ -59,8 +59,8 @@ public class ChatService {
             promptEntity.setResponse(response.response());
             promptEntity.setCreatedAt(LocalDateTime.now());
             promptService.getPrompt(promptEntity);
-            currentUser.getPrompts().add(promptEntity);
-            userService.getUser(currentUser);
+            promptEntity.setUser(currentUser);
+            promptService.getPrompt(promptEntity);
             return response.response();
 
         } else {
