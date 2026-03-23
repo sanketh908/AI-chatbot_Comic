@@ -29,7 +29,7 @@ public class Security  {
                 .requestMatchers("/admin/**").hasRole("ADMIN").requestMatchers("/home/**").permitAll().requestMatchers("/login").permitAll()
                 .anyRequest().authenticated()
                 )
-                .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
+                .formLogin(form->form.loginPage("/login").disable())
                 .logout(LogoutConfigurer::permitAll);
 
 
@@ -37,7 +37,7 @@ public class Security  {
     }
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder(12);
     }
    @Bean
     public AuthenticationProvider authenticationProvider() {
