@@ -35,7 +35,7 @@ public class ChatbotController {
     @GetMapping("/history")
     public ResponseEntity<List<Prompt>> getHistory() {
         User currentUser = userService.getCurrentUser();
-        List<Prompt> history = chatService.getHistory(currentUser);
+        List<Prompt> history = currentUser.getPrompts() != null ? currentUser.getPrompts() : new ArrayList<>();
         return new ResponseEntity<>(history, HttpStatus.OK);
 
     }
