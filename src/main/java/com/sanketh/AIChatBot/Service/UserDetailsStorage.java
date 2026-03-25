@@ -7,7 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserDetailsService {
+public class UserDetailsStorage {
     public User getCurrentUser() {
         Authentication authentication = SecurityContextHolder
                 .getContext()

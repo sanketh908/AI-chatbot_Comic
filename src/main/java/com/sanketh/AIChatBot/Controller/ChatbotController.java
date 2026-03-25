@@ -4,7 +4,7 @@ import com.sanketh.AIChatBot.DTO.Response;
 import com.sanketh.AIChatBot.Entity.Prompt;
 import com.sanketh.AIChatBot.Entity.User;
 import com.sanketh.AIChatBot.Service.ChatService;
-import com.sanketh.AIChatBot.Service.UserDetailsService;
+import com.sanketh.AIChatBot.Service.UserDetailsStorage;
 import com.sanketh.AIChatBot.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,9 +26,9 @@ import java.util.List;
 public class ChatbotController {
 
     private final ChatService chatService;
-    private final UserDetailsService userService;
+    private final UserDetailsStorage userService;
 
-    public ChatbotController(ChatService chatService, UserService userService, UserDetailsService userService1) {
+    public ChatbotController(ChatService chatService, UserService userService, UserDetailsStorage userService1) {
         this.chatService = chatService;
         this.userService = userService1;
     }
