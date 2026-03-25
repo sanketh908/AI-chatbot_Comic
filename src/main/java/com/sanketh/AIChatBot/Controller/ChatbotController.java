@@ -1,5 +1,6 @@
 package com.sanketh.AIChatBot.Controller;
 
+import com.sanketh.AIChatBot.DTO.PromptResponse;
 import com.sanketh.AIChatBot.DTO.Response;
 import com.sanketh.AIChatBot.Entity.Prompt;
 import com.sanketh.AIChatBot.Entity.User;
@@ -33,9 +34,9 @@ public class ChatbotController {
         this.userService = userService1;
     }
     @GetMapping("/history")
-    public ResponseEntity<List<Prompt>> getHistory() {
+    public ResponseEntity<List<PromptResponse>> getHistory() {
         User currentUser = userService.getCurrentUser();
-        List<Prompt> history = currentUser.getPrompts() != null ? currentUser.getPrompts() : new ArrayList<>();
+        List<PromptResponse> history = chatService.getHistory();
         return new ResponseEntity<>(history, HttpStatus.OK);
 
     }

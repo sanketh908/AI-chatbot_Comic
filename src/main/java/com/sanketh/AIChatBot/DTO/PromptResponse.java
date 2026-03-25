@@ -1,8 +1,14 @@
 package com.sanketh.AIChatBot.DTO;
 
-import java.time.LocalDateTime;
+import lombok.Data;
 
-public record PromptResponse(String prompt,
-                             String response,
-                             LocalDateTime createdAt){
+import java.time.LocalDateTime;
+@Data
+public class PromptResponse {
+    private String prompt;
+    private String response;
+    private LocalDateTime createdAt;
+
+
+
 }

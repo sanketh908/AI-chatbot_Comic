@@ -1,10 +1,13 @@
 package com.sanketh.AIChatBot.Service;
 
+import com.sanketh.AIChatBot.Entity.Prompt;
 import com.sanketh.AIChatBot.Entity.User;
 import com.sanketh.AIChatBot.Security.UserPrinciple;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserDetailsStorage {
@@ -20,4 +23,5 @@ public class UserDetailsStorage {
         UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
         return userPrinciple.getUser();
     }
+  public List<Prompt> findByUser(User currentUser)
 }
