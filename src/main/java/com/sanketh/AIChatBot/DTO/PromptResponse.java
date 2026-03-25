@@ -10,5 +10,9 @@ public class PromptResponse {
     private LocalDateTime createdAt;
 
 
-
+    public PromptResponse(String prompt, String response, LocalDateTime createdAt) {
+        this.prompt = prompt;
+        this.response = response;
+        this.createdAt = createdAt;
+    }
 }

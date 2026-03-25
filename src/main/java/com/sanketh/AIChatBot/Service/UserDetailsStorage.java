@@ -23,5 +23,5 @@ public class UserDetailsStorage {
         UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
         return userPrinciple.getUser();
     }
-  public List<Prompt> findByUser(User currentUser)
+
 }

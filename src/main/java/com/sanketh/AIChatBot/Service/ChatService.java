@@ -6,36 +6,38 @@ import com.sanketh.AIChatBot.Entity.Prompt;
 import com.sanketh.AIChatBot.Entity.User;
 import com.sanketh.AIChatBot.Repository.PromptRepository;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
-
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
+@Slf4j
 @Service
 public class ChatService {
 
     private final UserDetailsStorage userDetailsStorage;
-    private final PromptRepository promptRepository;
     private final PromptService promptService;
     private final RestClient restClient;
     private final String model;
     public ChatService(UserDetailsStorage userDetailsStorage, PromptRepository promptRepository, PromptService promptService, @Value("${ollama.base-url}") String baseUrl, @Value("${ollama.model}") String model) {
         this.userDetailsStorage = userDetailsStorage;
-        this.promptRepository = promptRepository;
         this.promptService = promptService;
         this.restClient = RestClient.builder().baseUrl(baseUrl).build();
         this.model = model;
     }
     public List<PromptResponse> getHistory() {
         User currentUser = userDetailsStorage.getCurrentUser();
-        List<Prompt> histroy = promptRepository.findByUser(currentUser);
-        return
+        List<Prompt> history = promptService.findByUser(currentUser);
+        log.info("Retrieved {} prompts for user {}", history.size(), currentUser.getUsername());
+        return history.stream()
+                .map(prompt -> new PromptResponse(prompt.getPrompt(),
+                        prompt.getResponse(),
+                        prompt.getCreatedAt()))
+                .toList();
 
     }
 
