@@ -1,10 +1,24 @@
 package com.sanketh.AIChatBot.Controller;
 
 import com.sanketh.AIChatBot.DTO.Response;
+import com.sanketh.AIChatBot.Entity.Prompt;
+import com.sanketh.AIChatBot.Entity.User;
 import com.sanketh.AIChatBot.Service.ChatService;
+import com.sanketh.AIChatBot.Service.UserDetailsService;
+import com.sanketh.AIChatBot.Service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.nio.file.attribute.UserPrincipal;
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/chat")
@@ -12,9 +26,18 @@ import org.springframework.web.bind.annotation.*;
 public class ChatbotController {
 
     private final ChatService chatService;
+    private final UserDetailsService userService;
 
-    public ChatbotController(ChatService chatService) {
+    public ChatbotController(ChatService chatService, UserService userService, UserDetailsService userService1) {
         this.chatService = chatService;
+        this.userService = userService1;
+    }
+    @GetMapping("/history")
+    public ResponseEntity<List<Prompt>> getHistory() {
+        User currentUser = userService.getCurrentUser();
+        List<Prompt> history = chatService.getHistory(currentUser);
+        return new ResponseEntity<>(history, HttpStatus.OK);
+
     }
 
     @GetMapping("/response")
