@@ -4,7 +4,9 @@ import com.sanketh.AIChatBot.DTO.Request;
 import com.sanketh.AIChatBot.DTO.Response;
 import com.sanketh.AIChatBot.Entity.Prompt;
 import com.sanketh.AIChatBot.Entity.User;
+import com.sanketh.AIChatBot.Exception.UserNotFoundException;
 import com.sanketh.AIChatBot.Repository.PromptRepository;
+import com.sanketh.AIChatBot.Repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,7 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+
 import java.util.List;
 
 
@@ -21,19 +23,22 @@ import java.util.List;
 public class ChatService {
 
     private final UserDetailsStorage userDetailsStorage;
+    private final UserRepository userRepository;
     private final PromptService promptService;
     private final RestClient restClient;
     private final String model;
-    public ChatService(UserDetailsStorage userDetailsStorage, PromptRepository promptRepository, PromptService promptService, @Value("${ollama.base-url}") String baseUrl, @Value("${ollama.model}") String model) {
+    public ChatService(UserDetailsStorage userDetailsStorage, PromptRepository promptRepository, UserRepository userRepository, PromptService promptService, @Value("${ollama.base-url}") String baseUrl, @Value("${ollama.model}") String model) {
         this.userDetailsStorage = userDetailsStorage;
+        this.userRepository = userRepository;
         this.promptService = promptService;
         this.restClient = RestClient.builder().baseUrl(baseUrl).build();
         this.model = model;
     }
-    public List<Prompt> deleteAllHistory() {
-     User currentUser = userDetailsStorage.getCurrentUser();
-     Integer userId = currentUser.getId();
-     promptService.deleteAllPrompts(userId);
+    public Boolean deleteAllHistory() {
+        User currentUser = userDetailsStorage.getCurrentUser();
+        User dbUser =userRepository.findById(currentUser.getId())
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+        return promptService.deleteAllPrompts(dbUser);
     }
     public List<PromptResponse> getHistory() {
         User currentUser = userDetailsStorage.getCurrentUser();

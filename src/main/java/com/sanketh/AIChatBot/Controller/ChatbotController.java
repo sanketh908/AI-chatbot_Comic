@@ -2,24 +2,13 @@ package com.sanketh.AIChatBot.Controller;
 
 import com.sanketh.AIChatBot.DTO.PromptResponse;
 import com.sanketh.AIChatBot.DTO.Response;
-import com.sanketh.AIChatBot.Entity.Prompt;
-import com.sanketh.AIChatBot.Entity.User;
-import com.sanketh.AIChatBot.Exception.NothingToDeleteException;
 import com.sanketh.AIChatBot.Service.ChatService;
 import com.sanketh.AIChatBot.Service.UserDetailsStorage;
 import com.sanketh.AIChatBot.Service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.nio.file.attribute.UserPrincipal;
-import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -51,13 +40,12 @@ public class ChatbotController {
     }
     @PostMapping("/clearAllhistory")
     public ResponseEntity<?> clearAllHistory() {
-       List<Prompt> promptList = chatService.deleteAllHistory();
-       if (promptList != null) {
-           return new ResponseEntity<>(promptList,HttpStatus.OK);
-       }
-       else {
-           throw new NothingToDeleteException("Nothing to delete");
-       }
+     boolean deleted =   chatService.deleteAllHistory();
+     if(deleted){
+         return new ResponseEntity<>("All history cleared successfully", HttpStatus.OK);
+     }
+        else
+            return new ResponseEntity<>("No history to clear", HttpStatus.OK);
     }
 
     @GetMapping("/ping")
