@@ -14,8 +14,11 @@ public class GlobalExceptionHandler {
        return new ResponseStructure(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value());
    }
    @ExceptionHandler(NothingToDeleteException.class)
-   public ResponseStructure handleException(Exception ex) {
+   public ResponseStructure handleNothingToDeleteException(Exception ex) {
        return new ResponseStructure(ex.getMessage(), HttpStatus.NO_CONTENT.value());
+   }
+   public ResponseStructure handleChatResponseGenerationException(Exception ex) {
+       return new ResponseStructure(ex.getMessage(), HttpStatus.SERVICE_UNAVAILABLE.value());
    }
 }
 

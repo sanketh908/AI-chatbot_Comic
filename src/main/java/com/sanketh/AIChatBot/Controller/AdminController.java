@@ -21,7 +21,11 @@ public class AdminController {
     @GetMapping("/getAllUsers")
     public ResponseEntity<?> getAllUser(){
         List<User> userList= userService.getAllUser();
-        return ResponseEntity.ok().body(userList);
+
+        if(!userList.isEmpty()){
+            return new ResponseEntity<>(userList, HttpStatus.OK);
+        }else
+            return new ResponseEntity<>("No users found", HttpStatus.BAD_REQUEST);
     }
     @DeleteMapping("/deleteUser/{id}")
     public ResponseEntity<?> deleteUserById(@PathVariable Integer id){

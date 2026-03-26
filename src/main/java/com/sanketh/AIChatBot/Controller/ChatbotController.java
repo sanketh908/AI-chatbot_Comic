@@ -2,6 +2,8 @@ package com.sanketh.AIChatBot.Controller;
 
 import com.sanketh.AIChatBot.DTO.PromptResponse;
 import com.sanketh.AIChatBot.DTO.Response;
+import com.sanketh.AIChatBot.Exception.ChatResponseGenerationException;
+import com.sanketh.AIChatBot.Exception.NothingToDeleteException;
 import com.sanketh.AIChatBot.Service.ChatService;
 import com.sanketh.AIChatBot.Service.UserDetailsStorage;
 import com.sanketh.AIChatBot.Service.UserService;
@@ -26,7 +28,13 @@ public class ChatbotController {
     @GetMapping("/history")
     public ResponseEntity<List<PromptResponse>> getHistory() {
         List<PromptResponse> history = chatService.getHistory();
-        return new ResponseEntity<>(history, HttpStatus.OK);
+        if (!history.isEmpty()) {
+            return new ResponseEntity<>(history, HttpStatus.OK);
+
+        }
+        else
+           throw new NothingToDeleteException("Nothing to delete");
+
 
     }
 
@@ -36,7 +44,8 @@ public class ChatbotController {
         if (response == null) {
             return new ResponseEntity<>(new Response(response), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(new Response(response), HttpStatus.OK);
+        else
+           throw new ChatResponseGenerationException("Failed to generate response");
     }
     @PostMapping("/clearAllhistory")
     public ResponseEntity<?> clearAllHistory() {
@@ -45,7 +54,7 @@ public class ChatbotController {
          return new ResponseEntity<>("All history cleared successfully", HttpStatus.OK);
      }
         else
-            return new ResponseEntity<>("No history to clear", HttpStatus.OK);
+           throw new NothingToDeleteException("Nothing to delete");
     }
 
     @GetMapping("/ping")
