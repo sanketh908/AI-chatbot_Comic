@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -28,6 +29,11 @@ public class ChatService {
         this.promptService = promptService;
         this.restClient = RestClient.builder().baseUrl(baseUrl).build();
         this.model = model;
+    }
+    public List<Prompt> deleteAllHistory() {
+     User currentUser = userDetailsStorage.getCurrentUser();
+     Integer userId = currentUser.getId();
+     promptService.deleteAllPrompts(userId);
     }
     public List<PromptResponse> getHistory() {
         User currentUser = userDetailsStorage.getCurrentUser();

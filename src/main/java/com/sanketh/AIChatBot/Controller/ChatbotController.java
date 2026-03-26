@@ -4,6 +4,7 @@ import com.sanketh.AIChatBot.DTO.PromptResponse;
 import com.sanketh.AIChatBot.DTO.Response;
 import com.sanketh.AIChatBot.Entity.Prompt;
 import com.sanketh.AIChatBot.Entity.User;
+import com.sanketh.AIChatBot.Exception.NothingToDeleteException;
 import com.sanketh.AIChatBot.Service.ChatService;
 import com.sanketh.AIChatBot.Service.UserDetailsStorage;
 import com.sanketh.AIChatBot.Service.UserService;
@@ -35,7 +36,6 @@ public class ChatbotController {
     }
     @GetMapping("/history")
     public ResponseEntity<List<PromptResponse>> getHistory() {
-        User currentUser = userService.getCurrentUser();
         List<PromptResponse> history = chatService.getHistory();
         return new ResponseEntity<>(history, HttpStatus.OK);
 
@@ -48,6 +48,16 @@ public class ChatbotController {
             return new ResponseEntity<>(new Response(response), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(new Response(response), HttpStatus.OK);
+    }
+    @PostMapping("/clearAllhistory")
+    public ResponseEntity<?> clearAllHistory() {
+       List<Prompt> promptList = chatService.deleteAllHistory();
+       if (promptList != null) {
+           return new ResponseEntity<>(promptList,HttpStatus.OK);
+       }
+       else {
+           throw new NothingToDeleteException("Nothing to delete");
+       }
     }
 
     @GetMapping("/ping")
