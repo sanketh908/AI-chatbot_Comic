@@ -1,9 +1,10 @@
 package com.sanketh.AIChatBot.DTO;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-
+@NoArgsConstructor
 @Data
 public class ResponseStructure {
    private String message;
@@ -14,8 +15,5 @@ public ResponseStructure(String message,int statusCode){
     this.message=message;
     this.statusCode=statusCode;
     this.timestamp=LocalDateTime.now();
-}
-public ResponseStructure(){
-    super();
 }
 }

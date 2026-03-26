@@ -5,8 +5,6 @@ import com.sanketh.AIChatBot.DTO.Response;
 import com.sanketh.AIChatBot.Exception.ChatResponseGenerationException;
 import com.sanketh.AIChatBot.Exception.NothingToDeleteException;
 import com.sanketh.AIChatBot.Service.ChatService;
-import com.sanketh.AIChatBot.Service.UserDetailsStorage;
-import com.sanketh.AIChatBot.Service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,11 +17,11 @@ import java.util.List;
 public class ChatbotController {
 
     private final ChatService chatService;
-    private final UserDetailsStorage userService;
 
-    public ChatbotController(ChatService chatService, UserService userService, UserDetailsStorage userService1) {
+
+    public ChatbotController(ChatService chatService) {
         this.chatService = chatService;
-        this.userService = userService1;
+
     }
     @GetMapping("/history")
     public ResponseEntity<List<PromptResponse>> getHistory() {
@@ -41,8 +39,8 @@ public class ChatbotController {
     @GetMapping("/response")
     public ResponseEntity<Response> chat(@RequestParam("prompt") String prompt) {
         String response = chatService.getResponse(prompt);
-        if (response == null) {
-            return new ResponseEntity<>(new Response(response), HttpStatus.INTERNAL_SERVER_ERROR);
+        if (response != null) {
+            return new ResponseEntity<>(new Response(response), HttpStatus.OK);
         }
         else
            throw new ChatResponseGenerationException("Failed to generate response");

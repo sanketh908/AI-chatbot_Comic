@@ -2,7 +2,6 @@ package com.sanketh.AIChatBot.Repository;
 
 import com.sanketh.AIChatBot.Entity.Prompt;
 import com.sanketh.AIChatBot.Entity.User;
-import jakarta.annotation.Nonnull;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -19,7 +18,7 @@ public interface PromptRepository extends JpaRepository<Prompt,Integer> {
     @Transactional
     @Query("DELETE FROM Prompt p WHERE p.user.id = :userId")
     int deleteByUserId(@Param("userId") Integer userId);
-    long deleteByUser(User user);
+
 
     List<Prompt> findByUser(User currentUser);
 }

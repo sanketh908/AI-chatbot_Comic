@@ -20,15 +20,15 @@ private final UserRepository userRepository;
         user.setPassword(passwordEncoder.encode(user.getPassword()));
        return   userRepository.save(user);
     }
-    public User getUserByName(String username){
-        return userRepository.findByUsername(username);
-    }
-    public User getUserByEmail(String email){
-        return userRepository.findByEmail(email);
-    }
-    public User getUserById(int id){
-        return userRepository.findById(id).orElse(null);
-    }
+//    public User getUserByName(String username){
+//        return userRepository.findByUsername(username);
+//    }
+//    public User getUserByEmail(String email){
+//        return userRepository.findByEmail(email);
+//    }
+//    public User getUserById(int id){
+//        return userRepository.findById(id).orElse(null);
+//    }
 
     public List<User> getAllUser() {
         return userRepository.findAll();
