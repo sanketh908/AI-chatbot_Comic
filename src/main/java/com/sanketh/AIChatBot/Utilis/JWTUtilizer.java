@@ -27,9 +27,7 @@ public class JWTUtilizer {
 
     }
     public String createToken(Map<String, Object> claims, String subject) {
-        return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(subject)
+        return Jwts.builder().claims(claims).subject(subject)
                 .header().empty().add("typ", "JWT").add("alg", "HS256")
                 .and()
                 .issuedAt(new Date(System.currentTimeMillis()))
