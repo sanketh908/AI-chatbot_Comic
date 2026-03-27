@@ -11,6 +11,9 @@ import java.io.IOException;
 public class JWTFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-
+    String authorizationHeader = request.getHeader("Authorization");
+    if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            String JWTToken = authorizationHeader.substring(7);
+    }
     }
 }
