@@ -61,7 +61,7 @@ public class HomeController {
            Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword())
             );
-            UserDetails userDetails=userServiceImpl.loadUserByUsername(user.getUsername());
+            UserDetails userDetails=userServiceImpl.loadUserByUsername(user.getEmail());
             String token = jwtUtilizer.generateToken(userDetails.getUsername());
             return new ResponseEntity<>(token, HttpStatus.OK);
         } catch (Exception e) {

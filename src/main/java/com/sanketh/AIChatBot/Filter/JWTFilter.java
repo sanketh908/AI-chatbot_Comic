@@ -18,8 +18,7 @@ import java.io.IOException;
 public class JWTFilter extends OncePerRequestFilter {
     private final JWTUtilizer jwtUtilizer;
     private final UserServiceImpl userServiceImpl;
-    private String username=null;
-    private String token=null;
+
 
     public JWTFilter(JWTUtilizer jwtUtilizer, UserServiceImpl userServiceImpl) {
         this.jwtUtilizer = jwtUtilizer;
@@ -28,7 +27,9 @@ public class JWTFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-    String authorizationHeader = request.getHeader("Authorization");
+        String username=null;
+         String token=null;
+        String authorizationHeader = request.getHeader("Authorization");
     if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             token= authorizationHeader.substring(7);
             username = jwtUtilizer.extractUsername(token);
@@ -44,7 +45,9 @@ public class JWTFilter extends OncePerRequestFilter {
 
           }
         }
+
+    }
         filterChain.doFilter(request, response);
     }
-    }
+
 }
