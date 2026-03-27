@@ -17,8 +17,13 @@ public class GlobalExceptionHandler {
    public ResponseStructure handleNothingToDeleteException(Exception ex) {
        return new ResponseStructure(ex.getMessage(), HttpStatus.NO_CONTENT.value());
    }
+   @ExceptionHandler(ChatResponseGenerationException.class)
    public ResponseStructure handleChatResponseGenerationException(Exception ex) {
        return new ResponseStructure(ex.getMessage(), HttpStatus.SERVICE_UNAVAILABLE.value());
+   }
+   @ExceptionHandler(BadCredentialException.class)
+   public ResponseStructure handleBadCredentialException(Exception ex) {
+       return new ResponseStructure(ex.getMessage(), HttpStatus.UNAUTHORIZED.value());
    }
 }
 
