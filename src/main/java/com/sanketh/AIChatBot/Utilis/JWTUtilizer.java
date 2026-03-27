@@ -50,5 +50,10 @@ public class JWTUtilizer {
     public boolean isTokenExpired(String token){
         return extractExpiration(token).before(new Date());
     }
+    public boolean validateToken(String token,String username) {
+        final String extractedUsername = extractUsername(token);
+        return (extractedUsername.equals(username)  && !isTokenExpired(token));
+    }
+
 
 }
