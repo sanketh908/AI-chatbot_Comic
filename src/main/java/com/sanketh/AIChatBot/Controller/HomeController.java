@@ -59,13 +59,13 @@ public class HomeController {
     public ResponseEntity<String> login(@RequestBody  User user) {
         try {
            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
+                    new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword())
             );
             UserDetails userDetails=userServiceImpl.loadUserByUsername(user.getUsername());
             String token = jwtUtilizer.generateToken(userDetails.getUsername());
             return new ResponseEntity<>(token, HttpStatus.OK);
         } catch (Exception e) {
-            throw new BadCredentialsException("Invalid username or password");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
