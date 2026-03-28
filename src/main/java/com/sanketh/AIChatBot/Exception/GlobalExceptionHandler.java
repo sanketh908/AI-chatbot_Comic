@@ -4,7 +4,9 @@ import com.sanketh.AIChatBot.DTO.ResponseStructure;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+@RestControllerAdvice
 public class GlobalExceptionHandler {
    @ExceptionHandler(UserNotFoundException.class)
    public ResponseStructure handleUserNotFoundException(UserNotFoundException ex) {
@@ -29,6 +31,10 @@ public class GlobalExceptionHandler {
    @ExceptionHandler(EntityNotFoundException.class)
     public ResponseStructure handleEntityNotFoundException(EntityNotFoundException ex) {
        return new ResponseStructure(ex.getMessage(), HttpStatus.NOT_FOUND.value());
+   }
+   @ExceptionHandler(InvalidJWTToken.class)
+    public ResponseStructure handleInvalidJWTToken(InvalidJWTToken invalidJWTToken) {
+       return new ResponseStructure(invalidJWTToken.getMessage(), HttpStatus.UNAUTHORIZED.value());
    }
 }
 

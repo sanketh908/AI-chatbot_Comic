@@ -39,9 +39,15 @@ public class JWTFilter extends OncePerRequestFilter {
                 username = jwtUtilizer.extractUsername(token);
             }
             catch (ExpiredJwtException e) {
-                throw new BadCredentialsException("token expired");
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.setContentType("application/json");
+                response.getWriter().write("{\"message\":\"Token expired\"}");
+                return;
             } catch (JwtException e) {
-                throw new RuntimeException(e);
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.setContentType("application/json");
+                response.getWriter().write("{\"message\":\"Invalid token\"}");
+                return;
             }
     }
     if (username != null) {
