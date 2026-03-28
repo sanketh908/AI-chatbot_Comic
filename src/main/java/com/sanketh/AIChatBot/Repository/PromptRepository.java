@@ -16,7 +16,7 @@ import java.util.Optional;
 @Repository
 public interface PromptRepository extends JpaRepository<Prompt,Integer> {
     Optional<Prompt> findByIdAndUserId(Integer id,Integer userId);
-    void deleteByIdAndUserId(Integer id,Integer userId);
+
     @Modifying
     @Transactional
     @Query("DELETE FROM Prompt p WHERE p.user.id = :userId")

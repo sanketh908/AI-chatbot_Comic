@@ -2,10 +2,13 @@ package com.sanketh.AIChatBot.Filter;
 
 import com.sanketh.AIChatBot.Security.UserServiceImpl;
 import com.sanketh.AIChatBot.Utilis.JWTUtilizer;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,7 +35,14 @@ public class JWTFilter extends OncePerRequestFilter {
         String authorizationHeader = request.getHeader("Authorization");
     if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             token= authorizationHeader.substring(7);
-            username = jwtUtilizer.extractUsername(token);
+            try {
+                username = jwtUtilizer.extractUsername(token);
+            }
+            catch (ExpiredJwtException e) {
+                throw new BadCredentialsException("token expired");
+            } catch (JwtException e) {
+                throw new RuntimeException(e);
+            }
     }
     if (username != null) {
         UserDetails user=userServiceImpl.loadUserByUsername(username);

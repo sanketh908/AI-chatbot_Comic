@@ -23,7 +23,14 @@ public class PromptService {
 
    }
    public void deleteById(Integer id,Integer currentUserId) {
-
+        Optional<Prompt> prompt = promptRepository.findByIdAndUserId(id,currentUserId);
+        if(prompt.isPresent()) {
+            promptRepository.delete(prompt.get());
+        }
+        else
+        {
+            throw new EntityNotFoundException("Prompt not found or not yours ");
+        }
    }
     public PromptService(PromptRepository promptRepository) {
         this.promptRepository = promptRepository;
