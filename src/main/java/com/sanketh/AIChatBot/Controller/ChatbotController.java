@@ -45,6 +45,16 @@ public class ChatbotController {
         else
            throw new ChatResponseGenerationException("Failed to generate response");
     }
+    @GetMapping("/response/thinkingMode")
+    public ResponseEntity<Response> thinkingMode(@RequestParam("prompt") String prompt) {
+        String response = chatService.getThinkingResponse(prompt);
+        if (response != null) {
+            return new ResponseEntity<>(new Response(response), HttpStatus.OK);
+        }
+        else {
+            throw new ChatResponseGenerationException("Failed to generate response");
+        }
+    }
     @PostMapping("/deletehistory/{id}")
     public ResponseEntity<String> deleteHistory(@PathVariable("id") Integer id) {
         chatService.deleteHistoryBytId(id);
