@@ -15,6 +15,7 @@ import java.util.Optional;
 
 @Repository
 public interface PromptRepository extends JpaRepository<Prompt,Integer> {
+
     Optional<Prompt> findByIdAndUserId(Integer id,Integer userId);
 
     @Modifying
