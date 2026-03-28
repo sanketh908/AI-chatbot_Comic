@@ -40,6 +40,12 @@ public class ChatService {
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
         return promptService.deleteAllPrompts(dbUser);
     }
+    public Boolean deleteHistoryBytId(Integer id)
+    {
+      User currentUser = userDetailsStorage.getCurrentUser();
+      Integer currentUserId = currentUser.getId();
+      promptService.deleteById(id,currentUserId);
+    }
     public List<PromptResponse> getHistory() {
         User currentUser = userDetailsStorage.getCurrentUser();
         List<Prompt> history = promptService.findByUser(currentUser);

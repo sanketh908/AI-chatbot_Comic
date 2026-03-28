@@ -10,10 +10,13 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
 public interface PromptRepository extends JpaRepository<Prompt,Integer> {
+    Optional<Prompt> findByIdAndUserId(Integer id,Integer userId);
+    void deleteByIdAndUserId(Integer id,Integer userId);
     @Modifying
     @Transactional
     @Query("DELETE FROM Prompt p WHERE p.user.id = :userId")

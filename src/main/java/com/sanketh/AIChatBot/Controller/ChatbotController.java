@@ -45,6 +45,11 @@ public class ChatbotController {
         else
            throw new ChatResponseGenerationException("Failed to generate response");
     }
+    @PostMapping("/deletehistory")
+    public ResponseEntity<Response> deleteHistory(@PathVariable Integer id) {
+
+
+    }
     @PostMapping("/clearAllhistory")
     public ResponseEntity<?> clearAllHistory() {
      boolean deleted =   chatService.deleteAllHistory();

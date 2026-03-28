@@ -1,6 +1,7 @@
 package com.sanketh.AIChatBot.Exception;
 
 import com.sanketh.AIChatBot.DTO.ResponseStructure;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -24,6 +25,10 @@ public class GlobalExceptionHandler {
    @ExceptionHandler(BadCredentialException.class)
    public ResponseStructure handleBadCredentialException(Exception ex) {
        return new ResponseStructure(ex.getMessage(), HttpStatus.UNAUTHORIZED.value());
+   }
+   @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseStructure handleEntityNotFoundException(EntityNotFoundException ex) {
+       return new ResponseStructure(ex.getMessage(), HttpStatus.NOT_FOUND.value());
    }
 }
 
