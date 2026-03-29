@@ -1,13 +1,12 @@
 package com.sanketh.AIChatBot.Service;
 
-import com.sanketh.AIChatBot.DTO.Request;
 import com.sanketh.AIChatBot.Entity.Prompt;
+import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
+@Component
 public class ThinkingService {
  private  final     PromptService promptService;
  private  final     ChatService chatService;
