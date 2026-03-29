@@ -37,6 +37,7 @@ public class ChatbotController {
 
 
     }
+    @GetMapping("/responce/thinking")
 
     @GetMapping("/response/stateless")
     public ResponseEntity<Response> chat(@RequestParam("prompt") String prompt) {
