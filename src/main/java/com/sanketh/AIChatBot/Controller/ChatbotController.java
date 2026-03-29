@@ -24,7 +24,6 @@ public class ChatbotController {
 
     public ChatbotController(ChatService chatService, ThinkingService thinkingService) {
         this.chatService = chatService;
-
         this.thinkingService = thinkingService;
     }
     @GetMapping("/history")
@@ -62,7 +61,7 @@ public class ChatbotController {
     @PostMapping("/deletehistory/{id}")
     public ResponseEntity<String> deleteHistory(@PathVariable("id") Integer id) {
         chatService.deleteHistoryBytId(id);
-        return new ResponseEntity<>("deleted succesfully", HttpStatus.OK);
+        return new ResponseEntity<>("deleted successfully", HttpStatus.OK);
 
     }
     @PostMapping("/clearAllhistory")

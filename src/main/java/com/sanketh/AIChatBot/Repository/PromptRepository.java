@@ -17,7 +17,7 @@ import java.util.Optional;
 public interface PromptRepository extends JpaRepository<Prompt,Integer> {
 
     Optional<Prompt> findByIdAndUserId(Integer id,Integer userId);
-    List<Prompt> findTop3ByUserIdOrderByDesc();
+    List<Prompt> findTop3ByUserIdOrderByCreatedDesc();
 
     @Modifying
     @Transactional
