@@ -10,17 +10,20 @@ import java.util.List;
 public class ThinkingService {
  private  final     PromptService promptService;
  private  final     ChatService chatService;
+ private  final     UserDetailsStorage userDetailsStorage;
 
-    public  ThinkingService(PromptService promptService, ChatService chatService) {
+    public  ThinkingService(PromptService promptService, ChatService chatService, UserDetailsStorage userDetailsStorage) {
         this.promptService = promptService;
         this.chatService = chatService;
+        this.userDetailsStorage = userDetailsStorage;
     }
     public String getThinkingResponse(String prompt)
     {
-        List<Prompt> lst2prom= promptService.findTop3ByUserIdOrderByDesc();
+        Integer id= userDetailsStorage.getCurrentUser().getId();
+        List<Prompt> lst2prom= promptService.findTop3ByUserIdOrderByCreatedAtDesc(id);
         if(lst2prom.size()!=0) {
             HashMap<String, String> map = new HashMap<>();
-            lst2prom.stream().map(s -> map.put("User:"+s.getPrompt(),"Assistant:"+s.getResponse()));
+            lst2prom.forEach(s -> map.put("User:"+s.getPrompt(),"Assistant:"+s.getResponse()));
             return chatService.getResponse("You are a helpful and conversational AI assistant." +
                     "Below are some previous interactions between the user and you:"+
                     map+
