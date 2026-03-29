@@ -28,7 +28,7 @@ public class ChatService {
     private final RestClient restClient;
     private final String model;
     private final String powerfulModel;
-    public ChatService(UserDetailsStorage userDetailsStorage, PromptRepository promptRepository, UserRepository userRepository, PromptService promptService, @Value("${ollama.base-url}") String baseUrl, @Value("${ollama.model}") String model,@Value("${qwen3.5:latest}") String powerfulModel) {
+    public ChatService(UserDetailsStorage userDetailsStorage, UserRepository userRepository, PromptService promptService, @Value("${ollama.base-url}") String baseUrl, @Value("${ollama.model}") String model,@Value("${qwen3.5:latest}") String powerfulModel) {
         this.userDetailsStorage = userDetailsStorage;
         this.userRepository = userRepository;
         this.promptService = promptService;
@@ -61,9 +61,11 @@ public class ChatService {
     }
 
     @Transactional
-    public String getResponse(String prompt, String s)
+    public String getResponse(String prompt, String s,int flag)
     {
-        Request request= new Request(model, prompt, false);
+        String modelToUse = (flag == 1) ? powerfulModel : model;
+
+        Request request= new Request(modelToUse, prompt, false);
         Response response=restClient.post().uri("/api/generate")
                 .body(request)
                 .retrieve()
