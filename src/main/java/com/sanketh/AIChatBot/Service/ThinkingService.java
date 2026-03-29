@@ -20,7 +20,7 @@ public class ThinkingService {
     public String getThinkingResponse(String prompt)
     {
         Integer id= userDetailsStorage.getCurrentUser().getId();
-        List<Prompt> lst2prom= promptService.findTop3ByUserIdOrderByCreatedAtDesc(id);
+        List<Prompt> lst2prom= promptService.findTop5ByUserIdOrderByCreatedAtDesc(id);
         if(lst2prom.size()!=0) {
             HashMap<String, String> map = new HashMap<>();
             lst2prom.forEach(s -> map.put("User:"+s.getPrompt(),"Assistant:"+s.getResponse()));
@@ -29,13 +29,14 @@ public class ThinkingService {
                     map+
                     "Use this information only if it is relevant to the current prompt. Do not mention that you are using past conversations. Do not refer to them as history or context."+
                     "Respond naturally as if you already understand the user's situation. Keep the tone smooth, human-like, and continuous."+
-                    "Current user prompt: "+prompt);
+                    "Current user prompt: "+prompt,prompt);
+
         }
         else
             return chatService.getResponse("You are a helpful and conversational AI assistant." +
 
                     "Respond naturally and clearly to the user's prompt" +
-                    "User prompt:"+prompt);
+                    "User prompt:"+prompt,prompt);
 
     }
 }

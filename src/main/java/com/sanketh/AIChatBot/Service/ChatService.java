@@ -59,9 +59,8 @@ public class ChatService {
     }
 
     @Transactional
-    public String getResponse(String prompt)
+    public String getResponse(String prompt, String s)
     {
-
         Request request= new Request(model, prompt, false);
         Response response=restClient.post().uri("/api/generate")
                 .body(request)
@@ -72,7 +71,7 @@ public class ChatService {
         Prompt promptEntity = new Prompt();
         if (response != null) {
 
-            promptEntity.setPrompt(prompt);
+            promptEntity.setPrompt(s);
             promptEntity.setResponse(response.response());
             promptEntity.setCreatedAt(LocalDateTime.now());
             promptEntity.setUser(userDetailsStorage.getCurrentUser());
@@ -81,7 +80,7 @@ public class ChatService {
             return response.response();
 
         } else {
-            promptEntity.setPrompt(prompt);
+            promptEntity.setPrompt(s);
             promptEntity.setResponse("no response given");
             promptEntity.setCreatedAt(LocalDateTime.now());
             return null;

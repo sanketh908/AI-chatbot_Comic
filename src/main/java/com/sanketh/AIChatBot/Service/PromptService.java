@@ -43,7 +43,7 @@ public class PromptService {
    List<Prompt> findByUser(User currentUser) {
         return promptRepository.findByUser(currentUser);
     }
-    public List<Prompt> findTop3ByUserIdOrderByCreatedAtDesc(Integer  userId) {
-        return promptRepository.findTop3ByUserIdOrderByCreatedAtDesc( userId);
+    public List<Prompt> findTop5ByUserIdOrderByCreatedAtDesc(Integer  userId) {
+        return promptRepository.findTop5ByUserIdOrderByCreatedAtDesc( userId);
     }
 }

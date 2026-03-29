@@ -12,9 +12,9 @@ public class Prompt {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "p_id", nullable = false,unique = true)
    private int id;
-    @Column(name = "prompt")
+    @Column(name = "prompt",columnDefinition = "TEXT")
    private String prompt;
-    @Column(name = "response",length = 5000)
+    @Column(name = "response")
    private String response;
     @Column(name = "created_at", nullable = false)
    private LocalDateTime createdAt;

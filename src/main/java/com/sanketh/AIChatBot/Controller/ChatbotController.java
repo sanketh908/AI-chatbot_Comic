@@ -6,7 +6,6 @@ import com.sanketh.AIChatBot.Exception.ChatResponseGenerationException;
 import com.sanketh.AIChatBot.Exception.NothingToDeleteException;
 import com.sanketh.AIChatBot.Service.ChatService;
 import com.sanketh.AIChatBot.Service.ThinkingService;
-import com.sanketh.AIChatBot.Service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +40,7 @@ public class ChatbotController {
 
     @GetMapping("/response/stateless")
     public ResponseEntity<Response> chat(@RequestParam("prompt") String prompt) {
-        String response = chatService.getResponse(prompt);
+        String response = chatService.getResponse(prompt, prompt);
         if (response != null) {
             return new ResponseEntity<>(new Response(response), HttpStatus.OK);
         }
