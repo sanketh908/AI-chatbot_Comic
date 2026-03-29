@@ -5,6 +5,8 @@ import com.sanketh.AIChatBot.DTO.Response;
 import com.sanketh.AIChatBot.Exception.ChatResponseGenerationException;
 import com.sanketh.AIChatBot.Exception.NothingToDeleteException;
 import com.sanketh.AIChatBot.Service.ChatService;
+import com.sanketh.AIChatBot.Service.ThinkingService;
+import com.sanketh.AIChatBot.Service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,11 +19,13 @@ import java.util.List;
 public class ChatbotController {
 
     private final ChatService chatService;
+    private final ThinkingService thinkingService;
 
 
-    public ChatbotController(ChatService chatService) {
+    public ChatbotController(ChatService chatService, ThinkingService thinkingService) {
         this.chatService = chatService;
 
+        this.thinkingService = thinkingService;
     }
     @GetMapping("/history")
     public ResponseEntity<List<PromptResponse>> getHistory() {
@@ -36,7 +40,7 @@ public class ChatbotController {
 
     }
 
-    @GetMapping("/response")
+    @GetMapping("/response/stateless")
     public ResponseEntity<Response> chat(@RequestParam("prompt") String prompt) {
         String response = chatService.getResponse(prompt);
         if (response != null) {
@@ -45,9 +49,9 @@ public class ChatbotController {
         else
            throw new ChatResponseGenerationException("Failed to generate response");
     }
-    @GetMapping("/response/thinkingMode")
+    @GetMapping("/response/statefull")
     public ResponseEntity<Response> thinkingMode(@RequestParam("prompt") String prompt) {
-        String response = chatService.getThinkingResponse(prompt);
+        String response = thinkingService.getThinkingResponse(prompt);
         if (response != null) {
             return new ResponseEntity<>(new Response(response), HttpStatus.OK);
         }

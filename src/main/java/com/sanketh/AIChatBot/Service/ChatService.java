@@ -88,7 +88,4 @@ public class ChatService {
         }
     }
 
-    public String getThinkingResponse(String prompt) {
-
-    }
 }
