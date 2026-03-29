@@ -37,28 +37,20 @@ public class ChatbotController {
 
 
     }
-    @GetMapping("/responce/thinking")
-    public ResponseEntity<Response> qwnAi(@RequestParam("prompt") String prompt) {
-        String response = thinkingService.getThinkingResponse(prompt,1);
-        if (response != null) {
-            return new ResponseEntity<>(new Response(response), HttpStatus.OK);
-        } else {
-            throw new ChatResponseGenerationException("Failed to generate response");
-        }
-    }
 
-    @GetMapping("/response/stateless")
+
+        @GetMapping("/response/stateless")
     public ResponseEntity<Response> chat(@RequestParam("prompt") String prompt) {
-        String response = chatService.getResponse(prompt, prompt,0);
+        String response = chatService.getResponse(prompt, prompt);
         if (response != null) {
             return new ResponseEntity<>(new Response(response), HttpStatus.OK);
         }
         else
            throw new ChatResponseGenerationException("Failed to generate response");
     }
-    @GetMapping("/response/statefull")
+    @GetMapping("/response/stateful")
     public ResponseEntity<Response> thinkingMode(@RequestParam("prompt") String prompt) {
-        String response = thinkingService.getThinkingResponse(prompt,0);
+        String response = thinkingService.getThinkingResponse(prompt);
         if (response != null) {
             return new ResponseEntity<>(new Response(response), HttpStatus.OK);
         }
