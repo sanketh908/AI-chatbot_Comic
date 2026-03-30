@@ -19,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 
 @RestController
@@ -27,7 +28,6 @@ import org.springframework.web.bind.annotation.*;
 public class HomeController {
     private final ResetTokenService resetTokenService;
     private final UserService userService;
-
     private final AuthenticationManager authenticationManager;
     private final JWTUtilizer jwtUtilizer;
     private final UserServiceImpl userServiceImpl;
@@ -77,7 +77,7 @@ public class HomeController {
     @PostMapping("/forgot-password")
     public ResponseEntity<String> forgotPassword(@RequestParam("email")  String email) {
         User foundUser = userService.findUserByEmail(email);
-        resetTokenService.createResetToken(foundUser);
+        resetTokenService.sendMail(foundUser);
         return new ResponseEntity<>("Password reset token sent to email", HttpStatus.OK);
 
 
