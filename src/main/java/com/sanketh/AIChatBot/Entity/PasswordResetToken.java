@@ -2,9 +2,10 @@ package com.sanketh.AIChatBot.Entity;
 
 import com.sanketh.AIChatBot.Enums.Roles;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDateTime;
-
+@Data
 @Entity
 public class PasswordResetToken {
     @Id

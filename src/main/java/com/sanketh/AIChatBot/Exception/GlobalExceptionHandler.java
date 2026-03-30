@@ -36,6 +36,10 @@ public class GlobalExceptionHandler {
     public ResponseStructure handleInvalidJWTToken(InvalidJWTToken invalidJWTToken) {
        return new ResponseStructure(invalidJWTToken.getMessage(), HttpStatus.UNAUTHORIZED.value());
    }
+   @ExceptionHandler(RuntimeException.class)
+    public ResponseStructure handleRuntimeException(RuntimeException ex) {
+       return new ResponseStructure(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value());
+   }
 }
 
 
