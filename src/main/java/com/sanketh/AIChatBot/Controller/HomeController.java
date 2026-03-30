@@ -2,7 +2,9 @@ package com.sanketh.AIChatBot.Controller;
 
 import com.sanketh.AIChatBot.Entity.User;
 import com.sanketh.AIChatBot.Enums.Roles;
+import com.sanketh.AIChatBot.Repository.UserRepository;
 import com.sanketh.AIChatBot.Security.UserServiceImpl;
+import com.sanketh.AIChatBot.Service.ResetTokenService;
 import com.sanketh.AIChatBot.Service.UserService;
 import com.sanketh.AIChatBot.Utilis.JWTUtilizer;
 import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
@@ -15,6 +17,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -22,14 +25,17 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*")
 @RequestMapping("/home")
 public class HomeController {
-
+    private final ResetTokenService resetTokenService;
     private final UserService userService;
+
     private final AuthenticationManager authenticationManager;
     private final JWTUtilizer jwtUtilizer;
     private final UserServiceImpl userServiceImpl;
-    public HomeController(UserService userService, AuthenticationManager authenticationManager, JWTUtilizer jwtUtilizer, UserServiceImpl userServiceImpl) {
+    public HomeController(ResetTokenService resetTokenService, UserService userService,  AuthenticationManager authenticationManager, JWTUtilizer jwtUtilizer, UserServiceImpl userServiceImpl) {
+        this.resetTokenService = resetTokenService;
 
         this.userService = userService;
+
         this.authenticationManager = authenticationManager;
         this.jwtUtilizer = jwtUtilizer;
         this.userServiceImpl = userServiceImpl;
@@ -68,5 +74,23 @@ public class HomeController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+    @PostMapping("/forgot-password")
+    public ResponseEntity<String> forgotPassword(@RequestParam("email")  String email) {
+        User foundUser = userService.findUserByEmail(email);
+        resetTokenService.createResetToken(foundUser);
+        return new ResponseEntity<>("Password reset token sent to email", HttpStatus.OK);
+
+
+    }
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(@RequestParam("token") String token, @RequestParam("newPassword") String newPassword) {
+        try {
+            resetTokenService.resetPassword(token, newPassword);
+            return new ResponseEntity<>("Password reset successful", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
 }
