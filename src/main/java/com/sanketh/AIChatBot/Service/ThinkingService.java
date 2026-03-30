@@ -19,9 +19,10 @@ public class ThinkingService {
     }
     public String getThinkingResponse(String prompt)
     {
+
         Integer id= userDetailsStorage.getCurrentUser().getId();
-        List<Prompt> lst2prom= promptService.findTop5ByUserIdOrderByCreatedAtDesc(id);
-        if(lst2prom.size()!=0) {
+        List<Prompt> lst2prom= promptService.findTop2ByUserIdOrderByCreatedAtDesc(id);
+        if(!lst2prom.isEmpty()) {
             HashMap<String, String> map = new HashMap<>();
             lst2prom.forEach(s -> map.put("User:"+s.getPrompt(),"Assistant:"+s.getResponse()));
             return chatService.getResponse("You are a helpful and conversational AI assistant." +
@@ -34,7 +35,6 @@ public class ThinkingService {
         }
         else
             return chatService.getResponse("You are a helpful and conversational AI assistant." +
-
                     "Respond naturally and clearly to the user's prompt" +
                     "User prompt:"+prompt,prompt);
 

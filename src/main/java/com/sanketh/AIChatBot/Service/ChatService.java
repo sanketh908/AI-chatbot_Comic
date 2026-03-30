@@ -27,12 +27,14 @@ public class ChatService {
     private final PromptService promptService;
     private final RestClient restClient;
     private final String model;
-    public ChatService(UserDetailsStorage userDetailsStorage, PromptRepository promptRepository, UserRepository userRepository, PromptService promptService, @Value("${ollama.base-url}") String baseUrl, @Value("${ollama.model}") String model) {
+
+    public ChatService(UserDetailsStorage userDetailsStorage, UserRepository userRepository, PromptService promptService, @Value("${ollama.base-url}") String baseUrl, @Value("${ollama.model}") String model ) {
         this.userDetailsStorage = userDetailsStorage;
         this.userRepository = userRepository;
         this.promptService = promptService;
         this.restClient = RestClient.builder().baseUrl(baseUrl).build();
         this.model = model;
+
     }
     public Boolean deleteAllHistory() {
         User currentUser = userDetailsStorage.getCurrentUser();
@@ -61,6 +63,8 @@ public class ChatService {
     @Transactional
     public String getResponse(String prompt, String s)
     {
+
+
         Request request= new Request(model, prompt, false);
         Response response=restClient.post().uri("/api/generate")
                 .body(request)
@@ -86,5 +90,6 @@ public class ChatService {
             return null;
         }
     }
+
 
 }
