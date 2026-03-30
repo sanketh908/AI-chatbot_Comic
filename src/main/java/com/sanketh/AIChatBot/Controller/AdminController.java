@@ -2,7 +2,9 @@ package com.sanketh.AIChatBot.Controller;
 
 import com.sanketh.AIChatBot.Entity.User;
 import com.sanketh.AIChatBot.Enums.Roles;
+import com.sanketh.AIChatBot.Service.UserDetailsStorage;
 import com.sanketh.AIChatBot.Service.UserService;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,6 +47,13 @@ public class AdminController {
         else
             return new ResponseEntity<>("User with id "+user.getId()+" not saved", HttpStatus.BAD_REQUEST);
     }
+    @PostMapping("/deleteAccount")
+    public ResponseEntity<?> deleteAccount(){
+         userService.deleteAccountById();
+        return new ResponseEntity<>("Account deleted successfully", HttpStatus.OK);
+
+    }
+    @PutMapping("/")
 
 
 }
