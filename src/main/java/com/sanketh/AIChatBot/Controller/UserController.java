@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+
 @CrossOrigin(origins = "*")
 public class UserController {
     private final UserService userService;

@@ -53,7 +53,7 @@ public class AdminController {
         return new ResponseEntity<>("Account deleted successfully", HttpStatus.OK);
 
     }
-    @PutMapping("/")
+
 
 
 }

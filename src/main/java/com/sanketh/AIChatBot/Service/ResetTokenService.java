@@ -6,6 +6,8 @@ import com.sanketh.AIChatBot.Repository.PasswordResetTokenRepository;
 import com.sanketh.AIChatBot.Repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.mail.MailSender;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -13,9 +15,11 @@ import java.util.UUID;
 
 @Service
 public class ResetTokenService {
+
     private final PasswordResetTokenRepository passwordResetTokenRepository;
     private final UserRepository userRepository;
     private final MailService mailService;
+     PasswordEncoder passwordEncoder=new BCryptPasswordEncoder(12);
 
     public ResetTokenService(PasswordResetTokenRepository passwordResetTokenRepository, UserRepository userRepository, MailService mailService) {
         this.passwordResetTokenRepository = passwordResetTokenRepository;
@@ -44,7 +48,7 @@ public class ResetTokenService {
     public void resetPassword(String token,String newPassword) {
         PasswordResetToken resetToken = validateToken(token);
         User user = resetToken.getUser();
-        user.setPassword(newPassword);
+        user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
         passwordResetTokenRepository.delete(resetToken);
 
