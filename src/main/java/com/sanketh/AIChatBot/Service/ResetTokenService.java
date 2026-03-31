@@ -57,7 +57,7 @@ public class ResetTokenService {
     public void sendMail(User user)
     {
         String token =createResetToken(user);
-        String link="http://localhost:8080/AIChatBot/reset-token?token="+token;
+        String link="http://localhost:8080/AIChatBot/reset-password?token="+token;
         mailService.sendmail(user.getEmail(),"Password Reset Request","Click the link to reset your password: "+link);
 
 

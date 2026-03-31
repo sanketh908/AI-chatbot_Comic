@@ -1,9 +1,12 @@
 package com.sanketh.AIChatBot.Controller;
 
+import com.sanketh.AIChatBot.DTO.Response;
 import com.sanketh.AIChatBot.Entity.User;
 import com.sanketh.AIChatBot.Enums.Roles;
+import com.sanketh.AIChatBot.Exception.ChatResponseGenerationException;
 import com.sanketh.AIChatBot.Repository.UserRepository;
 import com.sanketh.AIChatBot.Security.UserServiceImpl;
+import com.sanketh.AIChatBot.Service.ChatService;
 import com.sanketh.AIChatBot.Service.ResetTokenService;
 import com.sanketh.AIChatBot.Service.UserService;
 import com.sanketh.AIChatBot.Utilis.JWTUtilizer;
@@ -26,16 +29,16 @@ import org.springframework.web.client.RestTemplate;
 @CrossOrigin(origins = "*")
 @RequestMapping("/home")
 public class HomeController {
+    private  final   ChatService chatService;
     private final ResetTokenService resetTokenService;
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
     private final JWTUtilizer jwtUtilizer;
     private final UserServiceImpl userServiceImpl;
-    public HomeController(ResetTokenService resetTokenService, UserService userService,  AuthenticationManager authenticationManager, JWTUtilizer jwtUtilizer, UserServiceImpl userServiceImpl) {
+    public HomeController(ChatService chatService, ResetTokenService resetTokenService, UserService userService, AuthenticationManager authenticationManager, JWTUtilizer jwtUtilizer, UserServiceImpl userServiceImpl) {
+        this.chatService = chatService;
         this.resetTokenService = resetTokenService;
-
         this.userService = userService;
-
         this.authenticationManager = authenticationManager;
         this.jwtUtilizer = jwtUtilizer;
         this.userServiceImpl = userServiceImpl;
@@ -90,6 +93,15 @@ public class HomeController {
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+    }
+    @GetMapping("/chat")
+    public ResponseEntity<Response> chat(@RequestParam String prompt) {
+        String response = chatService.getResponse(prompt, prompt);
+        if (response != null) {
+            return new ResponseEntity<>(new Response(response), HttpStatus.OK);
+        }
+        else
+            throw new ChatResponseGenerationException("Failed to generate response");
     }
 
 
