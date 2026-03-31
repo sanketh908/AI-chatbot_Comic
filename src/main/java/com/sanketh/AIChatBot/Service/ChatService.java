@@ -59,6 +59,16 @@ public class ChatService {
                 .toList();
 
     }
+    public Response noLogInChat(String prompt)
+    {
+        Request request= new Request(model, prompt, false);
+        Response response=restClient.post().uri("/api/generate")
+                .body(request)
+                .retrieve()
+                .body(Response.class);
+        assert response != null;
+        return response;
+    }
 
     @Transactional
     public String getResponse(String prompt, String s)

@@ -95,10 +95,10 @@ public class HomeController {
         }
     }
     @GetMapping("/chat")
-    public ResponseEntity<Response> chat(@RequestParam String prompt) {
-        String response = chatService.getResponse(prompt, prompt);
+    public ResponseEntity<Response> chat(@RequestParam("prompt") String prompt) {
+        Response response = chatService.noLogInChat(prompt);
         if (response != null) {
-            return new ResponseEntity<>(new Response(response), HttpStatus.OK);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
         else
             throw new ChatResponseGenerationException("Failed to generate response");
