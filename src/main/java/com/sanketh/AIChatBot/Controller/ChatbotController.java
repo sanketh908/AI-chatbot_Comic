@@ -6,6 +6,7 @@ import com.sanketh.AIChatBot.Exception.ChatResponseGenerationException;
 import com.sanketh.AIChatBot.Exception.NothingToDeleteException;
 import com.sanketh.AIChatBot.Service.ChatService;
 import com.sanketh.AIChatBot.Service.ThinkingService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/chat")
 @CrossOrigin(origins = "*")
+@Tag(name = "ChatbotController", description = "Controller for handling chatbot interactions, including retrieving chat history, generating responses in both stateless and stateful modes, and managing chat history. All endpoints in this controller require authentication.")
 public class ChatbotController {
 
     private final ChatService chatService;

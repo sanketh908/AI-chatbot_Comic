@@ -3,6 +3,7 @@ package com.sanketh.AIChatBot.Controller;
 import com.sanketh.AIChatBot.Entity.User;
 import com.sanketh.AIChatBot.Service.UserDetailsStorage;
 import com.sanketh.AIChatBot.Service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/user")
 @CrossOrigin(origins = "*")
+@Tag(name = "UserController", description = "Controller for handling user account management, including account deletion and username editing. All endpoints in this controller require authentication.")
 public class UserController {
     private final UserService userService;
     private final UserDetailsStorage userDetailsStorage;

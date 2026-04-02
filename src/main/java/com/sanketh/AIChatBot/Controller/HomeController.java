@@ -1,7 +1,8 @@
 package com.sanketh.AIChatBot.Controller;
 
+import com.sanketh.AIChatBot.DTO.LoginDTO;
 import com.sanketh.AIChatBot.DTO.Response;
-import com.sanketh.AIChatBot.DTO.UserDTO;
+import com.sanketh.AIChatBot.DTO.SignupDTO;
 import com.sanketh.AIChatBot.Entity.User;
 import com.sanketh.AIChatBot.Enums.Roles;
 import com.sanketh.AIChatBot.Exception.ChatResponseGenerationException;
@@ -53,7 +54,7 @@ public class HomeController {
                 "on various topics.try it our ";
     }
     @PostMapping("/signup")
-    public ResponseEntity<String> register( @Valid @RequestBody UserDTO userDTO) {
+    public ResponseEntity<String> register(@Valid @RequestBody SignupDTO userDTO) {
         User user = new User();
         user.setUsername(userDTO.getUsername());
         user.setPassword(userDTO.getPassword());
@@ -67,7 +68,7 @@ public class HomeController {
 
     }
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody  UserDTO userDTO) {
+    public ResponseEntity<String> login(@RequestBody LoginDTO userDTO) {
         try {
            Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(userDTO.getEmail(), userDTO.getPassword())
