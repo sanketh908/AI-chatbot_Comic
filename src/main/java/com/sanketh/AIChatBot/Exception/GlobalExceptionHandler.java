@@ -3,6 +3,7 @@ package com.sanketh.AIChatBot.Exception;
 import com.sanketh.AIChatBot.DTO.ResponseStructure;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -40,6 +41,11 @@ public class GlobalExceptionHandler {
     public ResponseStructure handleRuntimeException(RuntimeException ex) {
        return new ResponseStructure(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value());
    }
+   @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseStructure handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+       return new ResponseStructure(ex.getMessage()+"invalid email ", HttpStatus.BAD_REQUEST.value());
+   }
+
 }
 
 
