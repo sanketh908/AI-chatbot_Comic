@@ -10,6 +10,7 @@ import com.sanketh.AIChatBot.Service.ChatService;
 import com.sanketh.AIChatBot.Service.ResetTokenService;
 import com.sanketh.AIChatBot.Service.UserService;
 import com.sanketh.AIChatBot.Utilis.JWTUtilizer;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/home")
+@Tag(name = "HomeController", description = "Controller for handling home page, user registration, login, password reset, and chatbot interactions. it don't  need authentication to access the endpoints in this controller")
 public class HomeController {
     private  final   ChatService chatService;
     private final ResetTokenService resetTokenService;
@@ -50,7 +52,7 @@ public class HomeController {
                 "on various topics.try it our ";
     }
     @PostMapping("/signup")
-    public ResponseEntity<User> register(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<String> register(@RequestBody UserDTO userDTO) {
         User user = new User();
         user.setUsername(userDTO.getUsername());
         user.setPassword(userDTO.getPassword());
@@ -58,9 +60,9 @@ public class HomeController {
         user.setRole(Roles.ROLE_USER);
         User newuser=userService.getUser(user);
         if(newuser !=null){
-            return new ResponseEntity<>(newuser, HttpStatus.OK);
+            return new ResponseEntity<>("User signup successful Username : "+newuser.getUsername()+"Email :"+newuser.getEmail(), HttpStatus.OK);
         }else
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("user signup failed !!",HttpStatus.BAD_REQUEST);
 
     }
     @PostMapping("/login")
