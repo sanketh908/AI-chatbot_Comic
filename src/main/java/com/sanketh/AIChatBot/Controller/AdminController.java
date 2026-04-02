@@ -1,6 +1,7 @@
 package com.sanketh.AIChatBot.Controller;
 
-import com.sanketh.AIChatBot.DTO.UserDTO;
+
+import com.sanketh.AIChatBot.DTO.SignupDTO;
 import com.sanketh.AIChatBot.Entity.User;
 import com.sanketh.AIChatBot.Enums.Roles;
 import com.sanketh.AIChatBot.Service.UserService;
@@ -40,7 +41,7 @@ public class AdminController {
             return ResponseEntity.badRequest().body("User with id "+id+" not found");
     }
     @PostMapping("/addAdmin")
-    public ResponseEntity<?> addAdmin(@RequestBody UserDTO userDTO){
+    public ResponseEntity<?> addAdmin(@RequestBody SignupDTO userDTO){
         User user=new User();
         user.setEmail(userDTO.getEmail());
         user.setPassword(userDTO.getPassword());
