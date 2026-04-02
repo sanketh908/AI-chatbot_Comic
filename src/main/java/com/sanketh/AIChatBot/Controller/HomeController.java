@@ -1,6 +1,7 @@
 package com.sanketh.AIChatBot.Controller;
 
 import com.sanketh.AIChatBot.DTO.Response;
+import com.sanketh.AIChatBot.DTO.UserDTO;
 import com.sanketh.AIChatBot.Entity.User;
 import com.sanketh.AIChatBot.Enums.Roles;
 import com.sanketh.AIChatBot.Exception.ChatResponseGenerationException;
@@ -49,7 +50,11 @@ public class HomeController {
                 "on various topics.try it our ";
     }
     @PostMapping("/signup")
-    public ResponseEntity<User> register(@RequestBody  User user) {
+    public ResponseEntity<User> register(@RequestBody UserDTO userDTO) {
+        User user = new User();
+        user.setUsername(userDTO.getUsername());
+        user.setPassword(userDTO.getPassword());
+        user.setEmail(userDTO.getEmail());
         user.setRole(Roles.ROLE_USER);
         User newuser=userService.getUser(user);
         if(newuser !=null){
@@ -59,12 +64,12 @@ public class HomeController {
 
     }
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody  User user) {
+    public ResponseEntity<String> login(@RequestBody  UserDTO userDTO) {
         try {
            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword())
+                    new UsernamePasswordAuthenticationToken(userDTO.getEmail(), userDTO.getPassword())
             );
-            UserDetails userDetails=userServiceImpl.loadUserByUsername(user.getEmail());
+            UserDetails userDetails=userServiceImpl.loadUserByUsername(userDTO.getEmail());
             String token = jwtUtilizer.generateToken(userDetails.getUsername());
             return new ResponseEntity<>(token, HttpStatus.OK);
         } catch (Exception e) {
