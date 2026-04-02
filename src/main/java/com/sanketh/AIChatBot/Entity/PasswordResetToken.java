@@ -1,6 +1,5 @@
 package com.sanketh.AIChatBot.Entity;
 
-import com.sanketh.AIChatBot.Enums.Roles;
 import jakarta.persistence.*;
 import lombok.Data;
 

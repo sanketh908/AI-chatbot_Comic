@@ -5,7 +5,6 @@ import com.sanketh.AIChatBot.DTO.Response;
 import com.sanketh.AIChatBot.Entity.Prompt;
 import com.sanketh.AIChatBot.Entity.User;
 import com.sanketh.AIChatBot.Exception.UserNotFoundException;
-import com.sanketh.AIChatBot.Repository.PromptRepository;
 import com.sanketh.AIChatBot.Repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;

@@ -2,9 +2,7 @@ package com.sanketh.AIChatBot.Controller;
 
 import com.sanketh.AIChatBot.Entity.User;
 import com.sanketh.AIChatBot.Enums.Roles;
-import com.sanketh.AIChatBot.Service.UserDetailsStorage;
 import com.sanketh.AIChatBot.Service.UserService;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

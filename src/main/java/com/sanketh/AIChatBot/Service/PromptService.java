@@ -37,8 +37,8 @@ public class PromptService {
     public PromptService(PromptRepository promptRepository) {
         this.promptRepository = promptRepository;
     }
-    public Prompt getPrompt(Prompt prompt) {
-        return promptRepository.save(prompt);
+    public void getPrompt(Prompt prompt) {
+        promptRepository.save(prompt);
     }
    List<Prompt> findByUser(User currentUser) {
         return promptRepository.findByUser(currentUser);

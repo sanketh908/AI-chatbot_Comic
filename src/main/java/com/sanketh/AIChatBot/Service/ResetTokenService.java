@@ -4,8 +4,6 @@ import com.sanketh.AIChatBot.Entity.PasswordResetToken;
 import com.sanketh.AIChatBot.Entity.User;
 import com.sanketh.AIChatBot.Repository.PasswordResetTokenRepository;
 import com.sanketh.AIChatBot.Repository.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
-import org.springframework.mail.MailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

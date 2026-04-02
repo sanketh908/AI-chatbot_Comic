@@ -57,13 +57,13 @@ public class ChatbotController {
             throw new ChatResponseGenerationException("Failed to generate response");
         }
     }
-    @PostMapping("/deletehistory/{id}")
+    @DeleteMapping("/deletehistory/{id}")
     public ResponseEntity<String> deleteHistory(@PathVariable("id") Integer id) {
         chatService.deleteHistoryBytId(id);
         return new ResponseEntity<>("deleted successfully", HttpStatus.OK);
 
     }
-    @PostMapping("/clearAllhistory")
+    @DeleteMapping("/clearAllhistory")
     public ResponseEntity<?> clearAllHistory() {
      boolean deleted =   chatService.deleteAllHistory();
      if(deleted){

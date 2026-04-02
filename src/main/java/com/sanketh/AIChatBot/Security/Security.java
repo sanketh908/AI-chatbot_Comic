@@ -34,6 +34,11 @@ public class Security  {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth->auth.requestMatchers("/chat/**").hasAnyRole("USER","ADMIN")
                 .requestMatchers("/admin/**").hasRole("ADMIN").requestMatchers("/home/**").permitAll().requestMatchers("/login").permitAll()
+                                .requestMatchers(
+                                        "/v3/api-docs/**",
+                                        "/swagger-ui/**",
+                                        "/swagger-ui.html"
+                                ).permitAll()
                 .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
