@@ -32,7 +32,7 @@ public class Security  {
         http
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth->auth.requestMatchers("/chat/**").hasAnyRole("USER","ADMIN")
+                .authorizeHttpRequests(auth->auth.requestMatchers("/chat/**").hasAnyRole("USER","ADMIN").requestMatchers("/user").hasAnyRole("ADMIN","USER")
                 .requestMatchers("/admin/**").hasRole("ADMIN").requestMatchers("/home/**").permitAll().requestMatchers("/login").permitAll()
                                 .requestMatchers(
                                         "/v3/api-docs/**",

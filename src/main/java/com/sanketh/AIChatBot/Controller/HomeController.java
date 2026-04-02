@@ -105,6 +105,10 @@ public class HomeController {
         else
             throw new ChatResponseGenerationException("Failed to generate response");
     }
+    @GetMapping("/ping")
+    public ResponseEntity<String> ping() {
+        return new ResponseEntity<>("Online",HttpStatus.OK);
+    }
 
 
 }

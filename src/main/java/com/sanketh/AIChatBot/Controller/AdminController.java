@@ -4,6 +4,8 @@ import com.sanketh.AIChatBot.DTO.UserDTO;
 import com.sanketh.AIChatBot.Entity.User;
 import com.sanketh.AIChatBot.Enums.Roles;
 import com.sanketh.AIChatBot.Service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
+@Tag(name = "AdminController", description = "Controller for handling admin operations such as managing users and accounts. Only users with the ROLE_ADMIN authority can access the endpoints in this controller.")
 @RequestMapping("/admin")
 public class AdminController {
     private final UserService userService;
