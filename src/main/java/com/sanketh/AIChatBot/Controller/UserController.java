@@ -27,7 +27,7 @@ public class UserController {
         return new ResponseEntity<>("Account deleted successfully", HttpStatus.OK);
 
     }
-    @PostMapping("/Editusername")
+    @PutMapping("/Editusername")
     public ResponseEntity<?> editUsername(@RequestParam("username") String username){
             try {
                 User user = userDetailsStorage.getCurrentUser();

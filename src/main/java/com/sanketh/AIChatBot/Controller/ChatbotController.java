@@ -1,5 +1,6 @@
 package com.sanketh.AIChatBot.Controller;
 
+import com.sanketh.AIChatBot.DTO.PromptDTO;
 import com.sanketh.AIChatBot.DTO.PromptResponse;
 import com.sanketh.AIChatBot.DTO.Response;
 import com.sanketh.AIChatBot.Exception.ChatResponseGenerationException;
@@ -41,8 +42,8 @@ public class ChatbotController {
     }
 
     @GetMapping("/response/stateless")
-    public ResponseEntity<Response> chat(@RequestParam("prompt") String prompt) {
-        String response = chatService.getResponse(prompt, prompt);
+    public ResponseEntity<Response> chat(@RequestBody PromptDTO promptDTO) {
+        String response = chatService.getResponse(promptDTO.getPrompt(), promptDTO.getPrompt());
         if (response != null) {
             return new ResponseEntity<>(new Response(response), HttpStatus.OK);
         }
@@ -50,8 +51,8 @@ public class ChatbotController {
            throw new ChatResponseGenerationException("Failed to generate response");
     }
     @GetMapping("/response/statefull")
-    public ResponseEntity<Response> thinkingMode(@RequestParam("prompt") String prompt) {
-        String response = thinkingService.getThinkingResponse(prompt);
+    public ResponseEntity<Response> thinkingMode(@RequestBody PromptDTO promptDTO) {
+        String response = thinkingService.getThinkingResponse(promptDTO.getPrompt());
         if (response != null) {
             return new ResponseEntity<>(new Response(response), HttpStatus.OK);
         }

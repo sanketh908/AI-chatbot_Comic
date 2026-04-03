@@ -1,6 +1,7 @@
 package com.sanketh.AIChatBot.Controller;
 
 import com.sanketh.AIChatBot.DTO.LoginDTO;
+import com.sanketh.AIChatBot.DTO.PromptDTO;
 import com.sanketh.AIChatBot.DTO.Response;
 import com.sanketh.AIChatBot.DTO.SignupDTO;
 import com.sanketh.AIChatBot.Entity.User;
@@ -98,8 +99,8 @@ public class HomeController {
         }
     }
     @GetMapping("/chat")
-    public ResponseEntity<Response> chat(@RequestParam("prompt") String prompt) {
-        Response response = chatService.noLogInChat(prompt);
+    public ResponseEntity<Response> chat(@RequestBody PromptDTO promptDTO) {
+        Response response = chatService.noLogInChat(promptDTO.getPrompt());
         if (response != null) {
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
