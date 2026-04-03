@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
 @EnableTransactionManagement
-public class  AiChatBotApplication {
+public class  AiChatBotApplication   {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AiChatBotApplication.class, args);
