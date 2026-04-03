@@ -142,41 +142,110 @@ The backend will start on `http://localhost:8080` by default.
 
 ## API Overview
 
-> Exact paths may differ depending on your controller mappings.  
-> These are typical examples; adjust them to match your actual code.
+## API Overview
 
-### Authentication & Users
+Below is a high‑level summary of the main REST endpoints.  
+For full details (request/response models, auth, examples), open Swagger UI:
 
-- `POST /api/auth/register`  
-  Register a new user.
+- Swagger UI: `http://localhost:8080/swagger-ui/index.html`
+- OpenAPI JSON: `http://localhost:8080/v3/api-docs`
 
-- `POST /api/auth/login`  
-  Authenticate and receive a JWT token.
+---
 
-- `POST /api/auth/request-reset`  
-  Request a password reset email.
+### HomeController
 
-- `POST /api/auth/reset-password`  
-  Reset password using a reset token.
+Public endpoints for signup, login, password reset, health checks, and basic pages.
 
-### Chatbot & Comic
+- `POST /home/signup`  
+  Register a new user account.
 
-- `POST /api/chat`  
-  Send a text prompt to the chatbot and receive a response.
+- `POST /home/reset-password`  
+  Reset password using a valid reset token.
 
-- `POST /api/chat/comic`  
-  Send a prompt to generate comic‑style content (LLaVA‑based).
+- `POST /home/login`  
+  Authenticate user and return JWT token.
 
-### Admin
+- `POST /home/forgot-password`  
+  Request a password reset link via email.
 
-- `GET /api/admin/users`  
-  List users (admin‑secured endpoint).
+- `GET /home/ping`  
+  Health‑check / ping endpoint.
 
-- `GET /api/admin/prompts`  
-  View saved prompts / history.
+- `GET /home/chat`  
+  Public/home chat page endpoint (view / basic info).
 
-(See Swagger UI for full and accurate list of endpoints.)
+- `GET /home/about`  
+  “About” page endpoint.
 
+- `GET /home/`  
+  Home page/root endpoint.
+
+---
+
+### ChatbotController
+
+Chatbot endpoints for getting responses, history, and managing chat history.  
+These endpoints require authentication.
+
+- `GET /chat/response/stateless`  
+  Get a chatbot response without storing conversation state.
+
+- `GET /chat/response/statefull`  
+  Get a chatbot response using stored conversation context.
+
+- `GET /chat/ping`  
+  Chatbot‑specific health‑check / ping.
+
+- `GET /chat/history`  
+  Get the authenticated user’s chat history.
+
+- `DELETE /chat/deletehistory/{id}`  
+  Delete a specific chat history entry by ID.
+
+- `DELETE /chat/clearAllhistory`  
+  Delete **all** chat history for the authenticated user.
+
+---
+
+### AdminController
+
+Admin operations. Only users with the `ROLE_ADMIN` authority can access these.
+
+- `POST /admin/deleteAccount`  
+  Delete a user account (admin action).
+
+- `POST /admin/addAdmin`  
+  Promote a user to admin / add an admin.
+
+- `GET /admin/getAllUsers`  
+  Get a list of all users.
+
+- `DELETE /admin/deleteUser/{id}`  
+  Delete a specific user by ID.
+
+---
+
+### UserController
+
+Authenticated user account management.
+
+- `PUT /user/Editusername`  
+  Edit the username of the currently authenticated user.
+
+- `POST /user/deleteAccount`  
+  Delete the currently authenticated user’s own account.
+
+---
+
+### DTO Schemas
+
+The main request/response models shown in Swagger:
+
+- `SignupDTO` – used for signup requests  
+- `LoginDTO` – used for login requests  
+- `PromptDTO` – used for chatbot prompt requests  
+- `Response` – standard AI/chatbot response wrapper  
+- `PromptResponse` – response containing prompt + AI output details
 ---
 
 ## API Documentation (Swagger / OpenAPI)
