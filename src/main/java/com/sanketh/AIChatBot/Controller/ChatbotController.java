@@ -41,7 +41,7 @@ public class ChatbotController {
 
     }
 
-    @GetMapping("/response/stateless")
+    @PostMapping("/response/stateless")
     public ResponseEntity<Response> chat(@RequestBody PromptDTO promptDTO) {
         String response = chatService.getResponse(promptDTO.getPrompt(), promptDTO.getPrompt());
         if (response != null) {
@@ -50,7 +50,7 @@ public class ChatbotController {
         else
            throw new ChatResponseGenerationException("Failed to generate response");
     }
-    @GetMapping("/response/statefull")
+    @PostMapping("/response/statefull")
     public ResponseEntity<Response> thinkingMode(@RequestBody PromptDTO promptDTO) {
         String response = thinkingService.getThinkingResponse(promptDTO.getPrompt());
         if (response != null) {

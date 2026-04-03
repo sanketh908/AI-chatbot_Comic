@@ -98,7 +98,7 @@ public class HomeController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-    @GetMapping("/chat")
+    @PostMapping("/chat")
     public ResponseEntity<Response> chat(@RequestBody PromptDTO promptDTO) {
         Response response = chatService.noLogInChat(promptDTO.getPrompt());
         if (response != null) {
