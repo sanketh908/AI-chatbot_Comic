@@ -1,7 +1,7 @@
 ﻿# AI Chatbot Comic
 
-AI Chatbot Comic is a Spring Boot–based backend application that lets users chat with an AI model and generate comic‑style content from their prompts.  
-It includes user authentication, password reset via email, and JWT‑based security.
+AI Chatbot Comic is a Spring Boot–based backend application that lets users chat with an AI model and generate content from their prompts.  
+It includes user authentication, password reset via email, and JWT‑based security,Role based autentication and aturaization too.it is a very simple project to learn the new going trand <b> Ai </b> this is just a try to get batter in spring and java 
 
 ---
 
